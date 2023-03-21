@@ -139,10 +139,16 @@ public class MainActivity extends AppCompatActivity implements Runnable{
     public void playSong() {
         try {
             if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                clearMediaPlayer();
-                seekBar.setProgress(0);
+                mediaPlayer.pause ();
+                mediaPlayer.seekTo (seekBar.getProgress ());
+                seekBar.getProgress ();
                 wasPlaying = true;
-                fabPlayPause.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_play));
+                fabPlayPause.setImageDrawable (ContextCompat.getDrawable (MainActivity.this, android.R.drawable.ic_media_play));
+            } else{
+                fabPlayPause.setImageDrawable (ContextCompat.getDrawable (MainActivity.this, android.R.drawable.ic_media_pause));
+                mediaPlayer.start();
+                new Thread(this).start();
+                wasPlaying = false;
             }
 
             if (!wasPlaying) {
